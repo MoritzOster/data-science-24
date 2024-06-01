@@ -5,37 +5,16 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from generate_data import *
 
-data = pd.read_parquet('/Users/emilyries/Downloads/Data_Science/Project/Implementation/data-science-24/features.parquet')
+data_path = '/Users/emilyries/Downloads/Data_Science/Project/Implementation/data-science-24/features.parquet'
 
-train_data = data.loc[data['anomaly'] == False]
-train_data = train_data.drop('anomaly', axis=1)
-ok_eval_data = train_data.iloc[:5]
-train_data = train_data.drop(range(5))
-
-# Ensure the data is of type float32
-train_data = train_data.astype('float32')
-ok_eval_data = ok_eval_data.astype('float32')
-
-test_data = data.loc[data['anomaly'] == True]
-test_data = test_data.drop('anomaly', axis=1)
-test_data = test_data.astype('float32')
-
-# Normalize the data (e.g., to the range [0, 1])
-train_data = train_data / train_data.max()
-test_data = test_data / test_data.max()
-ok_eval_data = ok_eval_data / ok_eval_data.max()
-
-# Convert the DataFrame to a NumPy array
-data_array = train_data.values
-test_array = test_data.values
-ok_eval_array = ok_eval_data.values
+train_data, test_data, ok_eval_data = get_data(data_path)
 
 # Convert the NumPy arrays to PyTorch tensors
-train_data = torch.tensor(data_array, dtype=torch.float32)
-test_data = torch.tensor(test_array, dtype=torch.float32)
-ok_eval_data = torch.tensor(ok_eval_array, dtype=torch.float32)
-
+train_data = torch.tensor(train_data, dtype=torch.float32)
+test_data = torch.tensor(test_data, dtype=torch.float32)
+ok_eval_data = torch.tensor(ok_eval_data, dtype=torch.float32)
 
 # Define the autoencoder model
 class Autoencoder(nn.Module):
@@ -71,8 +50,8 @@ batch_size = 2
 
 # Create data loaders
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True)
-test_loader = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False)
-ok_loader = torch.utils.data.DataLoader(ok_eval_data, batch_size=batch_size, shuffle=False)
+test_loader = torch.utils.data.DataLoader(test_data, batch_size=1, shuffle=False)
+ok_loader = torch.utils.data.DataLoader(ok_eval_data, batch_size=1, shuffle=False)
 
 # Training loop
 for epoch in range(num_epochs):
@@ -93,18 +72,20 @@ print('Training complete')
 
 threshold = 0.1  # Adjust as needed
 
+print('True Value is non-positive')
 for i, data in enumerate(test_loader, 0):
     output = model(data)
     loss = criterion(output, data)
     if loss.item() < threshold:
         print(f'Sample {i} is likely positive.')
-    if loss.item() > threshold:
+    if loss.item() >= threshold:
         print(f'Sample {i} is likely non-positive.')
 
+print('True value is positive')
 for i, data in enumerate(ok_loader, 0):
     output = model(data)
     loss = criterion(output, data)
     if loss.item() < threshold:
         print(f'Sample {i} is likely positive.')
-    if loss.item() > threshold:
+    if loss.item() >= threshold:
         print(f'Sample {i} is likely non-positive.')
