@@ -44,9 +44,6 @@ tpot_config = {
         'min_samples_split': [2, 5, 10],
         'min_samples_leaf': [1, 2, 4]
     },
-    'sklearn.decomposition.PCA': {
-        'n_components': [0.95, 0.9, 0.8, 0.7]
-    },
     'sklearn.feature_selection.SelectPercentile': {
         'percentile': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     },
