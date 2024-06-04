@@ -1,13 +1,11 @@
-from sklearn.svm import SVC
+import numpy as np
 from tpot import TPOTClassifier
 from generate_data import *
 from sklearn.model_selection import train_test_split
 import json
 
-
-data_path = '/Users/emilyries/Downloads/Data_Science/Project/Implementation/data-science-24/features.parquet'
+data_path = './features.parquet'
 data = pd.read_parquet(data_path)
-#spindle_data = data.loc[:,~data.columns.str.startswith('ae')]
 
 
 X_train, X_test, y_train, y_test = train_test_split(data.iloc[:,:-1], data['anomaly'],
@@ -48,22 +46,20 @@ tpot_config = {
         'percentile': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     },
     'sklearn.feature_selection.RFE': {
-        'estimator': [SVC(kernel='linear')],
-        'n_features_to_select': [0.2, 0.4, 0.6, 0.8, 1.0]
-    },
-    'sklearn.feature_selection.RFE': {
-        'estimator': [SVC(kernel='rbf')],
-        'n_features_to_select': [0.2, 0.4, 0.6, 0.8, 1.0]
+        'n_features_to_select': [0.2, 0.4, 0.6, 0.8, 1.0],
+        'estimator': {
+            'sklearn.ensemble.ExtraTreesClassifier': {
+                'n_estimators': [100],
+                'criterion': ['gini', 'entropy'],
+                'max_features': np.arange(0.05, 1.01, 0.05)
+            }
+        }
     }
 }
 
 pipeline_optimizer = TPOTClassifier(config_dict=tpot_config, generations=5, population_size=20, cv=10, random_state=42, verbosity=2)
 
 pipeline_optimizer.fit(X_train, y_train)
-evaluated_individuals = json.dumps(pipeline_optimizer.evaluated_individuals_, indent=2)
-with open('evaluated_individuals.json', 'a') as j:
-    j.write(evaluated_individuals)
-
 
 print(pipeline_optimizer.score(X_test, y_test))
 pipeline_optimizer.export('best_pipeline.py')
