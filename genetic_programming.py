@@ -1,8 +1,8 @@
 import numpy as np
 from tpot import TPOTClassifier
-from generate_data import *
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-import json
 
 data_path = './features.parquet'
 data = pd.read_parquet(data_path)
