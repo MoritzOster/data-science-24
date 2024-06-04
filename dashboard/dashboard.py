@@ -1,46 +1,50 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
-import asyncio
-import websockets
+from data_provider import DataProvider
 
-# Function to asynchronously fetch data from the WebSocket
-async def fetch_data():
-    uri = "ws://localhost:8765"
-    async with websockets.connect(uri) as websocket:
-        while True:
-            try:
-                data = await websocket.recv()
-                batch = pd.read_json(data, orient='split')
-                yield batch
-            except websockets.ConnectionClosedError as e:
-                print(f'Connection closed error: {e}')
-                break
+# Path to the .parquet file
+file_path = './2024.02.14_22.00.40_Grinding/raw/Sampling2000KHz_AEKi-0.parquet'
+
+# Initialize DataProvider with the desired parameters
+data_provider = DataProvider(file_path, sampling_rate=2000000, downsample_factor=1000)
 
 # Streamlit UI
 st.title('Real-Time AE Signal Visualization')
 st.write("Simulating real-time data from AE measurements.")
 
 # Initialize Plotly figure
-fig = go.FigureWidget()
-scatter = fig.add_scatter(x=[], y=[])
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=[], y=[], mode='lines'))
 
-plotly_chart = st.plotly_chart(fig)
+# Create a placeholder for the plot
+plotly_chart = st.plotly_chart(fig, use_container_width=True)
 
-# Function to update the plot with new data
-def update_plot(fig, new_data):
-    fig.data[0].x = list(fig.data[0].x) + list(new_data.index)
-    fig.data[0].y = list(fig.data[0].y) + list(new_data['AEKi_rate2000000_clipping0_batch0'])
+# Define the window size in seconds
+window_size_seconds = 5
 
-# Initialize the Streamlit async loop
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+# Function to update the plot with a sliding window of the last N seconds
+def update_plot(fig, new_data, timestamp):
+    x_values = list(fig.data[0].x)
+    y_values = list(fig.data[0].y)
+    
+    # Append the new data point
+    x_values.append(timestamp)
+    y_values.append(new_data)
 
-# Fetch and display data
-async def display_data():
-    async for batch in fetch_data():
-        update_plot(fig, batch)
-        plotly_chart.plotly_chart(fig)
+    # Keep only the data points within the window size
+    min_timestamp = timestamp - window_size_seconds
+    x_values = [x for x in x_values if x >= min_timestamp]
+    y_values = y_values[-len(x_values):]
 
-# Run the display_data coroutine
-loop.run_until_complete(display_data())
+    # Assign the updated lists back to the figure
+    fig.data[0].x = x_values
+    fig.data[0].y = y_values
+
+# Simulate real-time data
+for data_point in data_provider.start():
+    timestamp = data_point.name / 2000000  # Assuming the index is used as timestamp
+    update_plot(fig, data_point, timestamp)
+    plotly_chart.plotly_chart(fig, use_container_width=True)
+
+st.write("Simulation complete.")
