@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 from tpot import TPOTClassifier
 import pandas as pd
@@ -61,8 +62,10 @@ pipeline_optimizer = TPOTClassifier(config_dict=tpot_config, generations=5, popu
 
 pipeline_optimizer.fit(X_train, y_train)
 
-print(pipeline_optimizer.score(X_test, y_test))
 pipeline_optimizer.export('best_pipeline.py')
+with open('best_model_pipeline.pkl', 'wb') as file:
+    pickle.dump(pipeline_optimizer, file)
+
 
 
 
