@@ -3,8 +3,8 @@ import streamlit as st
 from amplitude_graph import AmplitudeGraph
 
 data_provider = DataProvider('./2024.02.14_22.00.40_Grinding', downsample_factor=2000)
-
-process_type = 'Grinding'
+meta = data_provider.meta_data()
+process_type = meta['process']
 title_placeholder = st.empty()  
 title_placeholder.title(f"Ongoing {process_type} Process")  
 st.write("AE Measurement")
