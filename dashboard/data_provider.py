@@ -24,6 +24,7 @@ class DataProvider:
         # e.g. 2 MHz = 2e6 samples per second -> update every 1 / 2e6 seconds
         # Works for both ae and current data, since current data is downsampled by a factor of 20 less
         self.sleep_time = downsample_factor / sampling_rate
+        print (self.sleep_time)
 
     def meta_data(self):
         pass
