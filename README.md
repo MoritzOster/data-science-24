@@ -1,5 +1,7 @@
 # Process Monitoring of Grinding Processes
 
+![image](https://github.com/MoritzOster/data-science-24/assets/44369843/0c3e96c2-c27e-4f16-b8bf-160cb776fbff)
+
 ## Overview
 
 This repository contains the code for the project "Process Monitoring of Grinding Processes," conducted by Group 1 of Data Science course 2024 at Saarland University. The project aims to monitor and analyze grinding processes to identify trends and detect anomalies, using data from sensors installed on a Kellenberger T25 grinding machine.
