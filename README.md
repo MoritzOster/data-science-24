@@ -40,15 +40,19 @@ Each recording consists of:
 - AE sensor: 2 MHz
 - Current sensor: 100 kHz
 
-## Contents
-
 ## Installation
 
-To set up the project environment, follow these steps:
+To install the dependencies, run the following command:
 
-1. Clone the repository:
+- pip install pandas numpy sklearn tpot scipy PyWavelets altair streamlit
 
-   ```bash
-   git clone https://github.com/yourusername/grinding-process-monitoring.git
-   cd grinding-process-monitoring
-   ```
+## Contents
+
+In the src folder:
+
+- feature_extraction.py: This script handles the feature extraction process.
+- model.py: Contains the model implementation. The best model is exported as best_model.pkl.
+- best_pipeline.py: Implements the pipeline for the best model.
+
+Run: streamlit run dashboard/dashboard.py to start the dashboard.
+Starting the dashboard in the current development stage, runs a simulation of a live grinding process, from a measurement, saved in dashboard/2024.02.14_22.00.40_Grinding
