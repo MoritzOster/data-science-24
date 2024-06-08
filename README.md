@@ -54,5 +54,5 @@ In the src folder:
 - model.py: Contains the model implementation. The best model is exported as best_model.pkl.
 - best_pipeline.py: Implements the pipeline for the best model.
 
-Run: streamlit run dashboard/dashboard.py to start the dashboard.
+Run: streamlit run dashboard.py in the dashboard folder, to start the dashboard.
 Starting the dashboard in the current development stage, runs a simulation of a live grinding process, from a measurement, saved in dashboard/2024.02.14_22.00.40_Grinding
