@@ -9,7 +9,10 @@ import pandas as pd
 import numpy as np
 from scipy.signal import welch
 from scipy.stats import skew, kurtosis, entropy
+import pyarrow.parquet as pq
 import pywt
+import zipfile
+from io import BytesIO
 
 # Function to extract time-domain features
 def extract_time_features(data):
@@ -118,10 +121,37 @@ def extract_features_from_path(path, anomaly):
 
     return pd.DataFrame(all_features_list)
 
+def extract_features_from_path_cluster(path, anomaly):
+    all_features_list = []
+
+    for file in os.listdir(path):
+        zip_path = os.path.join(path, file)
+        with zipfile.ZipFile(zip_path) as z:
+            for name in z.namelist():
+                if name.endswith("Grinding/"):
+                    raw_path = os.path.join(name, "raw/")
+                    target_contents = [item for item in z.namelist() if item.startswith(raw_path)]
+
+                    for file_path in target_contents:
+                        with z.open(file_path) as file:
+                            if "2000KHz" in file_path:
+                                buffer = BytesIO(file.read())
+                                ae_data = pd.read_parquet(buffer)
+                            elif "100KHz" in file_path:
+                                buffer = BytesIO(file.read())
+                                current_data = pd.read_parquet(buffer)
+            
+                    combined_features = extract_all_combined_features(ae_data, current_data, anomaly)
+
+                    all_features_list.append(combined_features)
+    
+    return pd.DataFrame(all_features_list)
+
+
 #--------------------------------------------------------------
 
 OK_DIRECTORY = '/home/dsbwl24_team001/data'
-all_features_df_ok = extract_features_from_path(OK_DIRECTORY, False)
+all_features_df_ok = extract_features_from_path_cluster(OK_DIRECTORY, False)
 all_features_df_ok.to_parquet('ok_features.parquet', engine='pyarrow')
 
 # NOK_DIRECTORY = '../../Data/NOK_Measurements'
