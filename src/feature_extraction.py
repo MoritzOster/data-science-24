@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 # Script for feature extraction of AE and spindle current measurements.
 """
@@ -118,11 +120,10 @@ def extract_features_from_path(path, anomaly):
 
 #--------------------------------------------------------------
 
-OK_DIRECTORY = '../Data/OK_Measurements'
-NOK_DIRECTORY = '../Data/NOK_Measurements'
-
+OK_DIRECTORY = '/home/dsbwl24_team001/data'
 all_features_df_ok = extract_features_from_path(OK_DIRECTORY, False)
-all_features_df_nok = extract_features_from_path(NOK_DIRECTORY, True)
+all_features_df_ok.to_parquet('ok_features.parquet', engine='pyarrow')
 
-all_features_df = pd.concat([all_features_df_ok, all_features_df_nok], ignore_index=True)
-all_features_df.to_parquet('features.parquet', engine='pyarrow')
+# NOK_DIRECTORY = '../../Data/NOK_Measurements'
+# all_features_df_nok = extract_features_from_path(NOK_DIRECTORY, True)
+# all_features_df_nok.to_parquet('nok_features.parquet', engine='pyarrow')
