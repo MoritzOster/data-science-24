@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 # Script for feature extraction of AE and spindle current measurements.
 """
@@ -7,7 +9,11 @@ import pandas as pd
 import numpy as np
 from scipy.signal import welch
 from scipy.stats import skew, kurtosis, entropy
+import pyarrow as pa
+import pyarrow.parquet as pq
 import pywt
+import zipfile
+from io import BytesIO
 
 # Function to extract time-domain features
 def extract_time_features(data):
@@ -83,10 +89,10 @@ def extract_all_combined_features(ae_data, current_data, anomaly):
         sampling_rate=1000)
 
     features_ae = {f"ae_{k}": v for k, v in features_ae.items()}
-    features_rms = {f"rms_{k}": v for k, v in features_ae.items()}
-    features_li1 = {f"li1_{k}": v for k, v in features_ae.items()}
-    features_li2 = {f"li2_{k}": v for k, v in features_ae.items()}
-    features_li3 = {f"li3_{k}": v for k, v in features_ae.items()}
+    features_rms = {f"rms_{k}": v for k, v in features_rms.items()}
+    features_li1 = {f"li1_{k}": v for k, v in features_li1.items()}
+    features_li2 = {f"li2_{k}": v for k, v in features_li2.items()}
+    features_li3 = {f"li3_{k}": v for k, v in features_li3.items()}
 
     combined_features = {**features_ae, **features_rms, **features_li1, **features_li2,
                             **features_li3}
@@ -94,15 +100,25 @@ def extract_all_combined_features(ae_data, current_data, anomaly):
 
     return combined_features
 
-def extract_features_from_path(path, anomaly):
-    all_features_list = []
+def extract_features_from_path(path, anomaly, output_file):
+    first_write = True
+
+    number_of_files = len(os.listdir(path))
+    already_processed = 0
+
+    # Create a ParquetWriter instance if writing for the first time
+    writer = None
 
     # Iterate through each folder in the base directory
     for folder_name in os.listdir(path):
+        print(f"Processing folder {already_processed} / {number_of_files} ({number_of_files - already_processed} remaining)")
+        already_processed += 1
         folder_path = os.path.join(path, folder_name)
         raw_path = os.path.join(folder_path, "raw")
 
         if os.path.isdir(raw_path):
+            ae_data = None
+            current_data = None
             for file_name in os.listdir(raw_path):
                 file_path = os.path.join(raw_path, file_name)
                 if "2000KHz" in file_name:
@@ -110,19 +126,70 @@ def extract_features_from_path(path, anomaly):
                 else:
                     current_data = pd.read_parquet(file_path)
 
-            combined_features = extract_all_combined_features(ae_data, current_data, anomaly)
+            if ae_data is not None and current_data is not None:
+                combined_features = extract_all_combined_features(ae_data, current_data, anomaly)
+                df = pd.DataFrame([combined_features])
+                table = pa.Table.from_pandas(df)
+                
+                if first_write:
+                    writer = pq.ParquetWriter(output_file, table.schema, compression='snappy')
+                    first_write = False
+                
+                writer.write_table(table)
+    
+    if writer:
+        writer.close()
 
-            all_features_list.append(combined_features)
+def extract_features_from_path_cluster(path, anomaly, output_file):
+    first_write = True
 
-    return pd.DataFrame(all_features_list)
+    # Create a ParquetWriter instance if writing for the first time
+    writer = None
+
+    for file in os.listdir(path):
+        zip_path = os.path.join(path, file)
+        with zipfile.ZipFile(zip_path) as z:
+            for name in z.namelist():
+                if name.endswith("Grinding/"):
+                    raw_path = os.path.join(name, "raw/")
+                    target_contents = [item for item in z.namelist() if item.startswith(raw_path)]
+
+                    ae_data = None
+                    current_data = None
+                    for file_path in target_contents:
+                        with z.open(file_path) as file:
+                            if "2000KHz" in file_path:
+                                buffer = BytesIO(file.read())
+                                ae_data = pd.read_parquet(buffer)
+                            elif "100KHz" in file_path:
+                                buffer = BytesIO(file.read())
+                                current_data = pd.read_parquet(buffer)
+            
+                    if ae_data is not None and current_data is not None:
+                        combined_features = extract_all_combined_features(ae_data, current_data, anomaly)
+                        df = pd.DataFrame([combined_features])
+                        table = pa.Table.from_pandas(df)
+                        
+                        if first_write:
+                            writer = pq.ParquetWriter(output_file, table.schema, compression='snappy')
+                            first_write = False
+                        
+                        writer.write_table(table)
+    
+    if writer:
+        writer.close()
 
 #--------------------------------------------------------------
 
-OK_DIRECTORY = '../Data/OK_Measurements'
-NOK_DIRECTORY = '../Data/NOK_Measurements'
+OK_DIRECTORY = '/home/dsbwl24_team001/data'
+extract_features_from_path_cluster(OK_DIRECTORY, False, 'ok_features.parquet')
 
-all_features_df_ok = extract_features_from_path(OK_DIRECTORY, False)
-all_features_df_nok = extract_features_from_path(NOK_DIRECTORY, True)
 
-all_features_df = pd.concat([all_features_df_ok, all_features_df_nok], ignore_index=True)
-all_features_df.to_parquet('features.parquet', engine='pyarrow')
+# OK_DIRECTORY = '/home/dsbwl24_team001/data'
+# OK_DIRECTORY = '../../Test_202402-4/'
+# all_features_df_ok = extract_features_from_path_cluster(OK_DIRECTORY, False)
+# extract_features_from_path(OK_DIRECTORY, False, 'ok_features.parquet')
+# all_features_df_ok.to_parquet('ok_features.parquet', engine='pyarrow')
+
+# NOK_DIRECTORY = '../../Data/NOK_Measurements'
+# extract_features_from_path(NOK_DIRECTORY, True, 'nok_features.parquet')
