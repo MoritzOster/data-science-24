@@ -5,14 +5,24 @@ import numpy as np
 from tpot import TPOTClassifier
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
+from evaluation import *
 
-data_path = './features.parquet'
+'''data_path = './features.parquet'
 data = pd.read_parquet(data_path)
 
 
 X_train, X_test, y_train, y_test = train_test_split(data.iloc[:,:-1], data['anomaly'],
-                                                    train_size=0.8, test_size=0.2)
+                                                    train_size=0.8, test_size=0.2)'''
+
+target = 'anomaly'
+train_data = pd.read_parquet('./upsampled_train_features.parquet')
+test_data = pd.read_parquet('./upsampled_test_features.parquet')
+
+X_train = train_data.drop(columns=[target])
+y_train = train_data[target]
+
+X_test = test_data.drop(columns=[target])
+y_test = test_data[target]
 
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
@@ -70,6 +80,9 @@ model = pipeline_optimizer.fitted_pipeline_.steps[-1][1]
 with open('best_model.pkl', 'wb') as file:
     pickle.dump(model, file)
 
+#evaluate
 
+plot_confusion_matrix(model, X_test, y_test)
+plot_roc(model, X_test, y_test)
 
 

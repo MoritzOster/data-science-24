@@ -2,7 +2,7 @@
 import pandas as pd
 from sklearn.svm import OneClassSVM
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import make_scorer, f1_score, classification_report, auc
+from sklearn.metrics import make_scorer, f1_score, classification_report, roc_auc_score, confusion_matrix, accuracy_score, precision_score, recall_score
 from sklearn.preprocessing import StandardScaler
 from evaluation import *
 
@@ -60,3 +60,10 @@ eval_y = np.concatenate(([1]*len(ok_eval_data), [-1]*len(test_data)), axis=0)
 plot_confusion_matrix(grid_search.best_estimator_, eval_x, eval_y)
 
 plot_roc(grid_search.best_estimator_, eval_x, eval_y)
+
+eval_pred = grid_search.best_estimator_.predict(eval_x)
+print(confusion_matrix(eval_y, eval_pred))
+print(accuracy_score(eval_y, eval_pred))
+print(precision_score(eval_y, eval_pred))
+print(roc_auc_score(eval_y, eval_pred))
+print(recall_score(eval_y, eval_pred))
