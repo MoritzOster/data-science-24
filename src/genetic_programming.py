@@ -2,28 +2,11 @@
 
 import pickle
 import numpy as np
+import json
 from tpot import TPOTClassifier
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
+from preprocessing import preprocess
 
-data_path = './features.parquet'
-data = pd.read_parquet(data_path)
-
-
-X_train, X_test, y_train, y_test = train_test_split(data.iloc[:,:-1], data['anomaly'],
-                                                    train_size=0.8, test_size=0.2)
-
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-
-X_train = X_train.values
-X_test = X_test.values
-
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
+X_train, y_train, X_test, y_test = preprocess('./upsampled_train_features.parquet', './upsampled_test_features.parquet')
 
 tpot_config = {
     'sklearn.neighbors.KNeighborsClassifier': {
@@ -70,6 +53,8 @@ model = pipeline_optimizer.fitted_pipeline_.steps[-1][1]
 with open('best_model.pkl', 'wb') as file:
     pickle.dump(model, file)
 
+evaluated_pipelines = pipeline_optimizer.evaluated_individuals_
 
-
+with open('evaluated_pipelines.json', 'w') as json_file:
+    json.dump(evaluated_pipelines, json_file, indent=4)
 
