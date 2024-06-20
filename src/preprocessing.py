@@ -108,4 +108,4 @@ def preprocess(path_train, path_test):
 
     return X_train, y_train, X_test, y_test
 
-pca_plot('./train_features.parquet', './test_features.parquet')
+# pca_plot('./train_features.parquet', './test_features.parquet')
