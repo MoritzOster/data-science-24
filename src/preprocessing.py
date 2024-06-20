@@ -53,6 +53,40 @@ def perform_pca(X_train, X_test):
 
     return X_train, X_test
 
+def pca_plot(path_train, path_test):
+    X_train, y_train, X_test, y_test = preprocess(path_train, path_test)
+    # Convert to DataFrame for easy plotting
+    train_df = pd.DataFrame(data=X_train, columns=['principal component 1', 'principal component 2'])
+    test_df = pd.DataFrame(data=X_test, columns=['principal component 1', 'principal component 2'])
+
+    if y_train is not None:
+        train_df['label'] = y_train
+    if y_test is not None:
+        test_df['label'] = y_test
+
+    # Plotting
+    plt.figure(figsize=(12, 6))
+
+    # Plot training data
+    plt.subplot(1, 2, 1)
+    sns.scatterplot(x='principal component 1', y='principal component 2', hue='label', data=train_df, palette='viridis')
+    plt.title('PCA of Training Data')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(title='Label')
+    plt.grid()
+
+    # Plot test data
+    plt.subplot(1, 2, 2)
+    sns.scatterplot(x='principal component 1', y='principal component 2', hue='label', data=test_df, palette='viridis')
+    plt.title('PCA of Test Data')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.legend(title='Label')
+    plt.grid()
+
+    plt.show()
+
 #------------------------------------------------------
 
 def preprocess(path_train, path_test):
