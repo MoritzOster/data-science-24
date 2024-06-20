@@ -60,29 +60,31 @@ def pca_plot(path_train, path_test):
     test_df = pd.DataFrame(data=X_test, columns=['principal component 1', 'principal component 2'])
 
     if y_train is not None:
-        train_df['label'] = y_train
+        train_df['anomaly'] = y_train
     if y_test is not None:
-        test_df['label'] = y_test
+        test_df['anomaly'] = y_test
 
+
+    plt.rc ('font', size = 14)
     # Plotting
     plt.figure(figsize=(12, 6))
 
     # Plot training data
     plt.subplot(1, 2, 1)
-    sns.scatterplot(x='principal component 1', y='principal component 2', hue='label', data=train_df, palette='viridis')
+    sns.scatterplot(x='principal component 1', y='principal component 2', hue='anomaly', data=train_df)
     plt.title('PCA of Training Data')
     plt.xlabel('Principal Component 1')
     plt.ylabel('Principal Component 2')
-    plt.legend(title='Label')
+    plt.legend(title='Anomaly')
     plt.grid()
 
     # Plot test data
     plt.subplot(1, 2, 2)
-    sns.scatterplot(x='principal component 1', y='principal component 2', hue='label', data=test_df, palette='viridis')
+    sns.scatterplot(x='principal component 1', y='principal component 2', hue='anomaly', data=test_df)
     plt.title('PCA of Test Data')
     plt.xlabel('Principal Component 1')
     plt.ylabel('Principal Component 2')
-    plt.legend(title='Label')
+    plt.legend(title='Anomaly')
     plt.grid()
 
     plt.show()
@@ -105,3 +107,5 @@ def preprocess(path_train, path_test):
     X_train, X_test = perform_pca(X_train, X_test)
 
     return X_train, y_train, X_test, y_test
+
+pca_plot('./train_features.parquet', './test_features.parquet')
