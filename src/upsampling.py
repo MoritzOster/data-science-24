@@ -43,14 +43,24 @@ train_df_upsampled = apply_smote(train_df, 'anomaly')
 # Perform SMOTE upsampling on the test data
 test_df_upsampled = apply_smote(test_df, 'anomaly')
 
-# Write the upsampled training and test datasets to new Parquet files
-train_output_file = 'upsampled_train_features.parquet'
-test_output_file = 'upsampled_test_features.parquet'
-train_df_upsampled.to_parquet(train_output_file, engine='pyarrow', compression='snappy')
-test_df_upsampled.to_parquet(test_output_file, engine='pyarrow', compression='snappy')
+# Write the original training and test datasets to new Parquet files
+train_output_file = 'train_features.parquet'
+test_output_file = 'test_features.parquet'
+train_df.to_parquet(train_output_file, engine='pyarrow', compression='snappy')
+test_df.to_parquet(test_output_file, engine='pyarrow', compression='snappy')
 
-print(f"Upsampled training data written to {train_output_file}")
-print(f"Upsampled test data written to {test_output_file}")
+print(f"Original training data written to {train_output_file}")
+print(f"Original test data written to {test_output_file}")
+
+# Write the upsampled training and test datasets to new Parquet files
+upsampled_train_output_file = 'upsampled_train_features.parquet'
+upsampled_test_output_file = 'upsampled_test_features.parquet'
+
+train_df_upsampled.to_parquet(upsampled_train_output_file, engine='pyarrow', compression='snappy')
+test_df_upsampled.to_parquet(upsampled_test_output_file, engine='pyarrow', compression='snappy')
+
+print(f"Upsampled training data written to {upsampled_train_output_file}")
+print(f"Upsampled test data written to {upsampled_test_output_file}")
 
 # Print class distribution to verify
 print("Original training class distribution:")
