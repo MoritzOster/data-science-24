@@ -108,4 +108,33 @@ def preprocess(path_train, path_test):
 
     return X_train, y_train, X_test, y_test
 
+def one_class_preprocess(ok_path, nok_path):
+    ok_data = load(ok_path)
+    nok_data = load(nok_path)
+    
+    ok_data, y_ok = remove_target(ok_data)
+    nok_data, y_nok = remove_target(nok_data)
+    
+    X_train = ok_data.iloc[:int(len(ok_data)*0.8)]
+    y_train = y_ok.iloc[:int(len(y_ok)*0.8)]
+    
+    ok_eval_data = ok_data.iloc[int(len(ok_data)*0.8):]
+    ok_eval_y = y_ok.iloc[int(len(y_ok)*0.8):]
+    
+    X_test = pd.concat([ok_eval_data, nok_data], axis=0)
+    y_test = pd.concat([ok_eval_y, y_nok], axis=0)
+    
+    X_train, X_test = remove_correlated_features(X_train, X_test)
+    
+    X_train, X_test = scale_data(X_train, X_test)
+
+    X_train, X_test = perform_pca(X_train, X_test)
+    
+    y_test = y_test.apply(lambda x : {True: -1, False: 1}.get(x))
+    y_train = y_train.apply(lambda x: {True: -1, False: 1}.get(x))
+    
+    return X_train, y_train, X_test, y_test
+    
+    
+
 # pca_plot('./train_features.parquet', './test_features.parquet')
