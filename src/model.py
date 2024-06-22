@@ -9,8 +9,8 @@ features = tpot_data.drop('target', axis=1)
 training_features, testing_features, training_target, testing_target = \
             train_test_split(features, tpot_data['target'], random_state=42)
 
-# Average CV score on the training set was: 1.0
-exported_pipeline = SVC(C=0.1, kernel="linear")
+# Average CV score on the training set was: 0.99125
+exported_pipeline = SVC(C=10, kernel="linear")
 # Fix random state in exported estimator
 if hasattr(exported_pipeline, 'random_state'):
     setattr(exported_pipeline, 'random_state', 42)

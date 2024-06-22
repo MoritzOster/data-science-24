@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import pickle
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -22,6 +23,8 @@ def remove_correlated_features(X_train, X_test):
     to_drop = [column for column in upper.columns if any(upper[column] > 0.9)]
     X_train = X_train.drop(columns=to_drop)
     X_test = X_test.drop(columns=to_drop)
+
+    # print(X_train.columns)
 
     return X_train, X_test
 
@@ -50,6 +53,9 @@ def perform_pca(X_train, X_test):
     pca = PCA(n_components=2)
     X_train = pca.fit_transform(X_train)
     X_test = pca.transform(X_test)
+
+    with open('../data/pca_model.pkl', 'wb') as f:
+        pickle.dump(pca, f)
 
     return X_train, X_test
 
@@ -100,7 +106,7 @@ def preprocess(path_train, path_test):
 
     X_train, X_test = remove_correlated_features(X_train, X_test)
 
-    #plot_correlation(X_train, y_train)
+    # plot_correlation(X_train, y_train)
 
     X_train, X_test = scale_data(X_train, X_test)
 
@@ -137,4 +143,4 @@ def one_class_preprocess(ok_path, nok_path):
     
     
 
-# pca_plot('./train_features.parquet', './test_features.parquet')
+# pca_plot('../data/train_features.parquet', '../data/test_features.parquet')
