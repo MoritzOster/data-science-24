@@ -36,7 +36,7 @@ def plot_correlation(X_df, y_df):
     sns.heatmap(cor, annot=True, cmap=plt.cm.Reds)
     plt.show()
 
-def scale_data(X_train, X_test):
+def scale_data(X_train, X_test, dump):
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
 
@@ -46,16 +46,21 @@ def scale_data(X_train, X_test):
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
+
+    if dump:
+        with open('../data/scaler.pkl', 'wb') as f:
+            pickle.dump(scaler, f)
     
     return X_train, X_test
 
-def perform_pca(X_train, X_test):
+def perform_pca(X_train, X_test, dump):
     pca = PCA(n_components=2)
     X_train = pca.fit_transform(X_train)
     X_test = pca.transform(X_test)
 
-    with open('../data/pca_model.pkl', 'wb') as f:
-        pickle.dump(pca, f)
+    if dump:
+        with open('../data/pca_model.pkl', 'wb') as f:
+            pickle.dump(pca, f)
 
     return X_train, X_test
 
@@ -108,9 +113,9 @@ def preprocess(path_train, path_test):
 
     # plot_correlation(X_train, y_train)
 
-    X_train, X_test = scale_data(X_train, X_test)
+    X_train, X_test = scale_data(X_train, X_test, True)
 
-    X_train, X_test = perform_pca(X_train, X_test)
+    X_train, X_test = perform_pca(X_train, X_test, True)
 
     return X_train, y_train, X_test, y_test
 
@@ -132,9 +137,9 @@ def one_class_preprocess(ok_path, nok_path):
     
     X_train, X_test = remove_correlated_features(X_train, X_test)
     
-    X_train, X_test = scale_data(X_train, X_test)
+    X_train, X_test = scale_data(X_train, X_test, False)
 
-    X_train, X_test = perform_pca(X_train, X_test)
+    X_train, X_test = perform_pca(X_train, X_test, False)
     
     y_test = y_test.apply(lambda x : {True: -1, False: 1}.get(x))
     y_train = y_train.apply(lambda x: {True: -1, False: 1}.get(x))
