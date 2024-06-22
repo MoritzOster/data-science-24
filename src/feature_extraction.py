@@ -181,8 +181,8 @@ def extract_features_from_path_cluster(path, anomaly, output_file):
 
 #--------------------------------------------------------------
 
-OK_DIRECTORY = '/home/dsbwl24_team001/data'
-extract_features_from_path_cluster(OK_DIRECTORY, False, 'ok_features.parquet')
+# OK_DIRECTORY = '/home/dsbwl24_team001/data'
+# extract_features_from_path_cluster(OK_DIRECTORY, False, 'ok_features.parquet')
 
 
 # OK_DIRECTORY = '/home/dsbwl24_team001/data'

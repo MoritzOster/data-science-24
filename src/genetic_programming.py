@@ -2,28 +2,9 @@
 
 import pickle
 import numpy as np
+import json
 from tpot import TPOTClassifier
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-
-data_path = './features.parquet'
-data = pd.read_parquet(data_path)
-
-
-X_train, X_test, y_train, y_test = train_test_split(data.iloc[:,:-1], data['anomaly'],
-                                                    train_size=0.8, test_size=0.2)
-
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-
-X_train = X_train.values
-X_test = X_test.values
-
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
-
+from preprocessing import preprocess
 
 tpot_config = {
     'sklearn.neighbors.KNeighborsClassifier': {
@@ -60,16 +41,21 @@ tpot_config = {
     }
 }
 
-pipeline_optimizer = TPOTClassifier(config_dict=tpot_config, generations=5, population_size=20, cv=10, random_state=42, verbosity=2)
+def genetic_programming(X_train, y_train):
+    pipeline_optimizer = TPOTClassifier(config_dict=tpot_config, generations=5, population_size=20, cv=10, random_state=42, verbosity=2)
 
-pipeline_optimizer.fit(X_train, y_train)
+    pipeline_optimizer.fit(X_train, y_train)
 
-pipeline_optimizer.export('model.py')
-model = pipeline_optimizer.fitted_pipeline_.steps[-1][1]
+    pipeline_optimizer.export('model.py')
+    model = pipeline_optimizer.fitted_pipeline_.steps[-1][1]
 
-with open('best_model.pkl', 'wb') as file:
-    pickle.dump(model, file)
+    with open('../data/best_model.pkl', 'wb') as file:
+        pickle.dump(model, file)
 
+    # evaluated_pipelines = pipeline_optimizer.evaluated_individuals_
 
+    # with open('evaluated_pipelines.json', 'w') as json_file:
+    #     json.dump(evaluated_pipelines, json_file, indent=4)
 
-
+# X_train, y_train, X_test, y_test = preprocess('../data/upsampled_train_features.parquet', '../data/test_features.parquet')
+# genetic_programming(X_train, y_train)

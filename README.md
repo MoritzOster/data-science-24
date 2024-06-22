@@ -11,13 +11,9 @@ This repository contains the code for the project "Process Monitoring of Grindin
 The repository is organized as follows:
 
 - **data/**
-  - Contains a small selection of the raw and processed data files
-  - **grinding/**: Grinding process data
-  - **dressing/**: Dressing process data
+  - Contains parquet files representing the data and pickle files for the model and PCA
 - **src/**
   - Contains the source code for data processing and model development
-- **notebooks/**
-  - Jupyter notebooks for exploratory data analysis
 - **dashboard/**
   - Contains the source code related to the monitoring dashboard for grinding processes
 
@@ -51,8 +47,12 @@ To install the dependencies, run the following command:
 In the src folder:
 
 - feature_extraction.py: This script handles the feature extraction process.
-- model.py: Contains the model implementation. The best model is exported as best_model.pkl.
-- best_pipeline.py: Implements the pipeline for the best model.
+- data_split.py: This script contains functionality for splitting the data into a test and training set and upsampling the training set.
+- preprocessing.py: This script handles the preprocessing of the extracted features
+- genetic_programming.py: Implements genetic programming to determine the best model.
+- evaluation.py: Contains functions to evaluate the baseline models.
+- pipeline.py: Combines all steps into one script.
+- prodetect.py: Implements the ProDetect model and provides functionality to evaluate new data points.
 
 Run: streamlit run dashboard.py in the dashboard folder, to start the dashboard.
 Starting the dashboard in the current development stage, runs a simulation of a live grinding process, from a measurement, saved in dashboard/2024.02.14_22.00.40_Grinding
