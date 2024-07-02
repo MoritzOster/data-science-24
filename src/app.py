@@ -2,6 +2,7 @@ import sys
 import os
 import csv
 from data_provider import DataProvider
+from recording_provider import DataProviderProvider
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,18 +10,14 @@ import time
 from prodetect import prodetect_predict
 from datetime import datetime
 
-# Calculate the path to the src directory
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-src_path = os.path.join(base_dir, 'src')
-sys.path.insert(0, src_path)
 
-data_path_NOK = '../data/example_recordings/NOK_Measurements'
-data_path_OK = '../data/example_recordings/OK_Measurements'
 
-# example_ae_path = data_path_OK + '/2024.02.14_22.00.40_Grinding'
-example_ae_path = data_path_NOK + '/2024.02.15_02.27.22_Grinding'
-# data/example_recordings/NOK_Measurements/2024.02.15_02.27.22_Grinding
-data_provider = DataProvider(example_ae_path, downsample_factor=100000)
+data_path= '../data/example_recordings'
+
+dataProviderProvider = DataProviderProvider(data_path, downsample_factor=100000)
+
+data_provider = dataProviderProvider.get_any_data_provider()
+ae_path = data_provider.get_ae_path()
 
 # Assuming data_provider is already imported and configured
 def load_data():
@@ -52,7 +49,7 @@ st.title('Real-time Data Streaming')
 status_placeholder = st.empty()
 plot_data()
 
-anomaly_prediction = prodetect_predict(example_ae_path + '/raw/Sampling2000KHz_AEKi-0.parquet')
+anomaly_prediction = prodetect_predict(ae_path)
 print(anomaly_prediction)
 result = anomaly_prediction
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

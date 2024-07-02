@@ -4,6 +4,7 @@ import json
 
 class DataProvider:
     def __init__(self, file_path, downsample_factor):
+
         ae_data = pd.read_parquet(file_path + '/raw/Sampling2000KHz_AEKi-0.parquet')
         current_data = pd.read_parquet(file_path + '/raw/Sampling100KHz_Irms_Grinding-Grinding spindle current L1-Grinding spindle current L2-Grinding spindle current L3-0.parquet')
         current_lrms_data = current_data['Irms_Grinding_rate100000_clipping0_batch0']
@@ -24,6 +25,7 @@ class DataProvider:
         # Works for both ae and current data, since current data is downsampled by a factor of 20 less
         self.sleep_time = downsample_factor / sampling_rate
 
+        self.file_path = file_path
         # Read the meta.json file
         with open(file_path + '/meta.json', 'r') as f:
             self.meta = json.load(f)
@@ -31,6 +33,9 @@ class DataProvider:
     def meta_data(self):
         return self.meta
 
+    def get_ae_path(self):
+        return self.file_path + '/raw/Sampling2000KHz_AEKi-0.parquet'
+    
     def next(self):
         if self.index == self.downsampled_total_points:
             return None
@@ -44,7 +49,8 @@ class DataProvider:
         return ae_sample, current_sample
 
 # Usage example
-# file_path = './2024.02.14_22.00.40_Grinding'
+# file_path = '../data/example_recordings/'
+
 # downsample_factor = 2000
 # data_provider = DataProvider(file_path, downsample_factor)
 
