@@ -33,6 +33,9 @@ class DataProvider:
     def meta_data(self):
         return self.meta
 
+    def get_current_path(self):
+        return self.file_path
+    
     def get_ae_path(self):
         return self.file_path + '/raw/Sampling2000KHz_AEKi-0.parquet'
     
