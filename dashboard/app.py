@@ -53,7 +53,7 @@ st.title('Real-time Data Streaming')
 status_placeholder = st.empty()
 plot_data()
 
-result = output = prodetect_predict("C:/Users/ebadu/OneDrive/Documents/data-science-24/dashboard/2024.02.14_22.00.40_Grinding/raw/Sampling2000KHz_AEKi-0.parquet")
+result = output = prodetect_predict("../dashboard/2024.02.14_22.00.40_Grinding/raw/Sampling2000KHz_AEKi-0.parquet")
 if result[0]:
     status_placeholder.error('**Failure!**', icon="🚨")
 else:
