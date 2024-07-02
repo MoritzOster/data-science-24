@@ -41,4 +41,6 @@ def prodetect_predict(path):
     feature_values = np.array(list(features.values())).reshape(1, -1)
     scaled_features = scaler.transform(feature_values)
     input = pca.transform(scaled_features)
-    print(prodetect.predict(input))
+    prediction = prodetect.predict(input)
+    print(prediction)
+    return prediction
