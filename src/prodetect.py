@@ -42,3 +42,4 @@ def prodetect_predict(path):
     scaled_features = scaler.transform(feature_values)
     input = pca.transform(scaled_features)
     print(prodetect.predict(input))
+    return prodetect.predict(input)
