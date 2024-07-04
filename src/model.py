@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.metrics import *
 
-path_train = '../data/train_features.parquet'
+path_train = '../data/upsampled_train_features.parquet'
 path_test = '../data/test_features.parquet'
 
 X_train, y_train, X_test, y_test = preprocess(path_train, path_test)
@@ -23,11 +23,11 @@ y_pred_lr = lr_classifier.predict(X_test)
 y_pred_lda = lda_classifier.predict(X_test)
 
 # Save the trained model to a file
-with open('logistic_regression_model.pkl', 'wb') as f:
+with open('../data/logistic_regression_model.pkl', 'wb') as f:
     pickle.dump(lr_classifier, f)
     
 # Save the trained model to a file
-with open('lda_model.pkl', 'wb') as f:
+with open('../data/lda_model.pkl', 'wb') as f:
     pickle.dump(lda_classifier, f)
 
 
