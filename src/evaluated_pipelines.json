@@ -1,0 +1,924 @@
+{
+    "SVC(input_matrix, SVC__C=0.1, SVC__kernel=linear)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7), ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=90), KNeighborsClassifier__n_neighbors=5)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=30), KNeighborsClassifier__n_neighbors=5)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "KNeighborsClassifier(CombineDFs(input_matrix, input_matrix), KNeighborsClassifier__n_neighbors=9)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=3)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "SVC(RFE(input_matrix, RFE__ExtraTreesClassifier__criterion=entropy, RFE__ExtraTreesClassifier__max_features=0.05, RFE__ExtraTreesClassifier__n_estimators=100, RFE__n_features_to_select=0.8), SVC__C=10, SVC__kernel=linear)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=9)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "SVC(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), SVC__C=1, SVC__kernel=rbf)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9981249999999999
+    },
+    "SVC(input_matrix, SVC__C=1, SVC__kernel=rbf)": {
+        "generation": 0,
+        "mutation_count": 0,
+        "crossover_count": 0,
+        "predecessor": [
+            "ROOT"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=30), KNeighborsClassifier__n_neighbors=3)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=30), KNeighborsClassifier__n_neighbors=5)"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=3)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=3)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7), ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9950000000000001
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=90), KNeighborsClassifier__n_neighbors=5), SVC__C=1, SVC__kernel=rbf)": {
+        "generation": 1,
+        "mutation_count": 0,
+        "crossover_count": 1,
+        "predecessor": [
+            "SVC(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=5), SVC__C=1, SVC__kernel=rbf)",
+            "KNeighborsClassifier(SelectPercentile(input_matrix, SelectPercentile__percentile=90), KNeighborsClassifier__n_neighbors=5)"
+        ],
+        "operator_count": 3,
+        "internal_cv_score": 0.9956250000000001
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(KNeighborsClassifier(input_matrix, KNeighborsClassifier__n_neighbors=7), ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "SVC(RFE(input_matrix, RFE__ExtraTreesClassifier__criterion=gini, RFE__ExtraTreesClassifier__max_features=0.05, RFE__ExtraTreesClassifier__n_estimators=100, RFE__n_features_to_select=0.8), SVC__C=10, SVC__kernel=linear)": {
+        "generation": 1,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(RFE(input_matrix, RFE__ExtraTreesClassifier__criterion=entropy, RFE__ExtraTreesClassifier__max_features=0.05, RFE__ExtraTreesClassifier__n_estimators=100, RFE__n_features_to_select=0.8), SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(input_matrix, SVC__C=1, SVC__kernel=linear)": {
+        "generation": 2,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 2,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 2,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=10, SVC__kernel=rbf)": {
+        "generation": 3,
+        "mutation_count": 1,
+        "crossover_count": 1,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)",
+            "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 3,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(SVC(input_matrix, SVC__C=0.1, SVC__kernel=linear), SVC__C=0.1, SVC__kernel=linear)": {
+        "generation": 4,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 2,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 4,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9962500000000001
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 3,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 3,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 3,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 4,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=200)": {
+        "generation": 4,
+        "mutation_count": 3,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=log2, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=5, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=rbf)": {
+        "generation": 5,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=1, SVC__kernel=linear)": {
+        "generation": 5,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=1, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=100)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=10, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=2, RandomForestClassifier__min_samples_split=10, RandomForestClassifier__n_estimators=200)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=1, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "RandomForestClassifier(input_matrix, RandomForestClassifier__max_features=sqrt, RandomForestClassifier__min_samples_leaf=4, RandomForestClassifier__min_samples_split=2, RandomForestClassifier__n_estimators=100)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.996875
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=10, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=auto, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=sqrt, ExtraTreesClassifier__min_samples_leaf=2, ExtraTreesClassifier__min_samples_split=2, ExtraTreesClassifier__n_estimators=200)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": -Infinity
+    },
+    "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=10, SVC__kernel=linear)": {
+        "generation": 5,
+        "mutation_count": 1,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(CombineDFs(input_matrix, input_matrix), SVC__C=0.1, SVC__kernel=linear)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9981249999999999
+    },
+    "ExtraTreesClassifier(input_matrix, ExtraTreesClassifier__max_features=log2, ExtraTreesClassifier__min_samples_leaf=4, ExtraTreesClassifier__min_samples_split=5, ExtraTreesClassifier__n_estimators=100)": {
+        "generation": 5,
+        "mutation_count": 2,
+        "crossover_count": 0,
+        "predecessor": [
+            "SVC(input_matrix, SVC__C=0.1, SVC__kernel=rbf)"
+        ],
+        "operator_count": 1,
+        "internal_cv_score": 0.9974999999999999
+    }
+}
