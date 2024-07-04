@@ -28,6 +28,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
     scikit-learn \
     xgboost \
     torch \
+<<<<<<< HEAD
     pyarrow \
+=======
+>>>>>>> 7eea67d6a81066d28bf7a5630d745c6acf2ebb90
     PyWavelets && \
     pip install --no-cache-dir tpot
