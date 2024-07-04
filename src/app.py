@@ -1,6 +1,8 @@
 import sys
 import os
 import csv
+
+import pandas as pd
 from data_provider import DataProvider
 from recording_provider import DataProviderProvider
 import streamlit as st
@@ -8,22 +10,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 from prodetect import prodetect_predict
+from collections import deque
 from datetime import datetime
 import pandas as pd
 import time
 
 st.set_page_config(layout="wide")
 data_path= '../data/example_recordings'
-dataProviderProvider = DataProviderProvider(data_path, downsample_factor=100000)
+dataProviderProvider = DataProviderProvider(data_path, downsample_factor=2000000)
 
 def load_data(data_provider):
     while True:
         data = data_provider.next()
         yield data
 
-def plot_data(data_provider, progress_bar):
+def plot_data(data_provider, placeholder):
     
-    fig, axs = plt.subplots(1, 4, figsize=(20, 5))
+    fig, axs = plt.subplots(2, 2, figsize=(10, 10))
+
+    axs = axs.flatten()
     
     lines = [ax.plot([], [], 'b-')[0] for ax in axs]
     
@@ -36,26 +41,34 @@ def plot_data(data_provider, progress_bar):
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.set_title(title)
-        ax.set_xlim(0, 60)  # Adjust as needed
+        ax.set_xlim(0, 25)  # Adjust as needed
         ax.set_ylim(-0.25, 0.25)  # Adjust as needed
+
+    data_gen = load_data(data_provider)
+
+    x_data = []
+    y_data = [[], [], [], []]    
     
-    # Placeholder for the figure
-    placeholder = st.empty()
-    
-    start_time = time.time()
+    # start_time = time.time()
     while True:
-        data = next(load_data(data_provider), None)
+        data = next(data_gen, None)
         if data is None:
             break
-        
-        elapsed_time = time.time() - start_time
-        if elapsed_time > 60:
-            break
-        progress_bar.progress(10)
+
+        # elapsed_time = time.time() - start_time
+        # if elapsed_time > 25:
+        #     break
+        # progress_bar.progress(10)
+
+        y_data[0].append(data[0])
+        y_data[1].append(data[2])
+        y_data[2].append(data[3])
+        y_data[3].append(data[4])
+        x_data.append(data[5])
         
         for i, line in enumerate(lines):
-            line.set_xdata(np.append(line.get_xdata(), elapsed_time))
-            line.set_ydata(np.append(line.get_ydata(), data[i]))
+            line.set_xdata(x_data)
+            line.set_ydata(y_data[i])
         
         for ax in axs:
             ax.figure.canvas.draw_idle()
@@ -63,106 +76,97 @@ def plot_data(data_provider, progress_bar):
         placeholder.pyplot(fig)
 
 
-st.title('Real-time Data Streaming')
-def read_and_plot_last_predictions(prediction_placeholder):
+def init_table(placeholder):
+    predictions = deque(maxlen=10)
+    last_10 = pd.read_csv('predictions.csv').tail(10)
+    last_10 = last_10.drop(columns=['Path'])
+    last_10['AnomalyPrediction'] = last_10['AnomalyPrediction'].apply(lambda x: '🚨' if x else '✅')
+    last_10 = last_10.rename(columns={'AnomalyPrediction': 'Result'})
+    last_10 = last_10.iloc[::-1]
+
+    for row in last_10.itertuples(index=False):
+        predictions.append(row)
+
+    update_table(placeholder, predictions)
+
+    return predictions
+
+def update_table(placeholder, preds):
+    with placeholder.container():
+        df = pd.DataFrame(preds, columns=['Timestamp', 'Result'])
+        df = df.set_index('Timestamp')
+        st.dataframe(df)
+
+def run(plot_p, image_p, status_p, last_process_p, last_10_p, preds):
+    data_provider_instance = dataProviderProvider.get_any_data_provider()
+
+    status_p.warning('Recording...')
+    # progress_p.progress(1)
+    plot_data(data_provider_instance, plot_p)
+    # progress_p.progress(25)
+    image_p.image(data_provider_instance.image_path)
+
+    status_p.warning('Processing...')
+    # progress_p.process(35)
+    anomaly_prediction = prodetect_predict(data_provider_instance.get_ae_path())
+    status_p.success('Done!')
+    # print(anomaly_prediction)
+    result = anomaly_prediction
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     csv_filename = 'predictions.csv'
-    try:
-        df = pd.read_csv(csv_filename)
-        last_predictions = df['AnomalyPrediction'].tail(10).tolist()
-        colors = ['red' if pred else 'green' for pred in last_predictions][::-1]
 
-        fig, ax = plt.subplots(figsize=(10, 2))
-        bars = ax.barh([0]*10, [1]*10, left=range(10), color=colors, height=0.2, edgecolor='black', linewidth=0.4)
-        ax.axis('off') 
-        ax.set_xlim(-0.5, 9.5) 
-        prediction_placeholder.pyplot(fig)
-    except Exception as e:
-        st.error(f"Failed to read or plot predictions: {e}")
+    # Write prediction results to CSV
+    with open(csv_filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        # Write header if file is empty
+        if file.tell() == 0:
+            writer.writerow(['Timestamp', 'AnomalyPrediction', 'Path'])
+        writer.writerow([timestamp, result[0], data_provider_instance.get_current_path()])
 
-# def run():
-#     data_provider = dataProviderProvider.get_any_data_provider()
-#     with st.container():
-#         col1, col2, col3, col4 = st.columns([4,1, 1, 1])
-#         ee = col4.empty()
-#         status_placeholder = col3.empty()
-#         process_placeholder = col2.empty()
-#         progress_bar = col1.progress(0)
-
-#     prediction_placeholder = st.empty()
-    
-#     plot_data(data_provider)
-#     progress_bar.progress(25)
-#     anomaly_prediction = prodetect_predict(data_provider.get_ae_path())
-#     result = anomaly_prediction[0]
-#     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-#     csv_filename = 'predictions.csv'
-#     progress_bar.progress(75)
-#     with open(csv_filename, mode='a', newline='') as file:
-#         writer = csv.writer(file)
-#         if file.tell() == 0:
-#             writer.writerow(['Timestamp', 'AnomalyPrediction', 'Path'])
-#         writer.writerow([timestamp, result, data_provider.get_current_path()])
-#     progress_bar.progress(100)
-#     process_placeholder.markdown('<h1 style="color: green;">✅</h1>', unsafe_allow_html=True)
-#     if result:
-#         status_placeholder.error('**Failure!**', icon="🚨")
-#     else:
-#         status_placeholder.success('**Success!**', icon="✅")
-    
-    # read_and_plot_last_predictions(prediction_placeholder)
-
-def run():
-    data_provider = dataProviderProvider.get_any_data_provider()
-
-    with st.container():
-        col1, col2 = st.columns([4, 1])
-
-        with col2:
-            progress_bar = st.progress(0)
-            process_placeholder = st.empty()
-            status_placeholder = st.empty()
-            prediction_placeholder = st.empty()
-
-        with col1:
-            progress_bar.progress(1)
-            
-            plot_data(data_provider, progress_bar)
-            progress_bar.progress(25)
-
-        with col1:
-            progress_bar.progress(35)
-            anomaly_prediction = prodetect_predict(data_provider.get_ae_path())
-            result = anomaly_prediction[0]
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            csv_filename = 'predictions.csv'
-            with open(csv_filename, mode='a', newline='') as file:
-                writer = csv.writer(file)
-                if file.tell() == 0:
-                    writer.writerow(['Timestamp', 'AnomalyPrediction', 'Path'])
-                writer.writerow([timestamp, result, data_provider.get_current_path()])
-            time.sleep(1)
-            progress_bar.progress(50) 
-
-        with col1:
-            time.sleep(1)
-            progress_bar.progress(75) 
-            # process_placeholder.markdown('<h1 style="color: green;">✅</h1>', unsafe_allow_html=True)
+    if result[0]:
+        last_process_p.error('**Failure!**', icon="🚨")
+        preds.appendleft([timestamp, "🚨"])
+    else:
+        last_process_p.success('**Success!**', icon="✅")
+        preds.appendleft([timestamp, "✅"])
 
 
-        with col2:
-            progress_bar.progress(100) 
-            if result:
-                status_placeholder.error('**Anomaly Detected**')
-            else:
-                status_placeholder.success('**No Anomaly Detected**')
-            read_and_plot_last_predictions(prediction_placeholder)
+    update_table(last_10_p, preds)
+
+    time.sleep(3)
+
+
 def main():
-    # if 'first_click' not in st.session_state:
-    #     st.session_state.first_click = True
-    # button_text = "Predict" if st.session_state.first_click else "Next Prediction"
-    if st.button('Predict'):
-        # st.session_state.first_click = False
-        run()
-        
+    st.title('Grinding Process Anomaly Detection')
 
-main()
+    # Create two columns
+    col1, col2 = st.columns([4, 5])
+
+    with col1:
+        st.text('Current process recordings:')
+        plot_placeholder = st.empty()
+        st.text('Reference for debugging:')
+        image_placeholder = st.empty()
+
+    with col2:
+        st.text('Detection status:')
+        # progress_bar = st.progress(0)
+        status_placeholder = st.empty()
+        st.text('Prediction of last process:')
+        last_process_placeholder = st.warning('Unknown')
+        st.text('Last 10 processes:')
+        last_10_placeholder = st.empty()
+        predictions = init_table(last_10_placeholder)
+
+    while True: 
+        run(
+            plot_placeholder, 
+            image_placeholder,
+            status_placeholder, 
+            last_process_placeholder,
+            last_10_placeholder, 
+            predictions
+        )
+
+if __name__ == "__main__":
+    main()

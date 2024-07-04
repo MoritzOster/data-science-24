@@ -12,6 +12,9 @@ class DataProvider:
         grinding_l2_data = current_data['Grinding spindle current L2_rate100000_clipping0_batch0']
         grinding_l3_data = current_data['Grinding spindle current L3_rate100000_clipping0_batch0']
 
+        # For debugging purposes:
+        self.image_path = file_path + '/raw_fig.png'
+
         # Assuming a sampling rate of 2 MHz for ae and 0.1 MHz for lrms
         ae_downsample_factor = downsample_factor
         current_downsample_factor = ae_downsample_factor // 20
@@ -57,9 +60,10 @@ class DataProvider:
         # Print how many percent of the data has been processed
         # print(f"{self.index / self.downsampled_total_points * 100:.2f}% processed")
         # Sleep to simulate real-time data
-        print(current_sample)
-        time.sleep(self.sleep_time)
-        return ae_sample, current_sample, grinding_sample_l1, grinding_sample_l2, grinding_sample_l3
+        # print(current_sample)
+        # time.sleep(self.sleep_time)
+        x_value = self.sleep_time * self.index
+        return ae_sample, current_sample, grinding_sample_l1, grinding_sample_l2, grinding_sample_l3, x_value
 
 # Usage example
 # file_path = '../data/example_recordings/'
