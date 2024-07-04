@@ -1,19 +1,35 @@
+import joblib
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
+from preprocessing import *
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.metrics import *
 
-# NOTE: Make sure that the outcome column is labeled 'target' in the data file
-tpot_data = pd.read_csv('PATH/TO/DATA/FILE', sep='COLUMN_SEPARATOR', dtype=np.float64)
-features = tpot_data.drop('target', axis=1)
-training_features, testing_features, training_target, testing_target = \
-            train_test_split(features, tpot_data['target'], random_state=42)
+path_train = '../data/upsampled_train_features.parquet'
+path_test = '../data/test_features.parquet'
 
-# Average CV score on the training set was: 0.99125
-exported_pipeline = SVC(C=10, kernel="linear")
-# Fix random state in exported estimator
-if hasattr(exported_pipeline, 'random_state'):
-    setattr(exported_pipeline, 'random_state', 42)
+X_train, y_train, X_test, y_test = preprocess(path_train, path_test)
 
-exported_pipeline.fit(training_features, training_target)
-results = exported_pipeline.predict(testing_features)
+# Train a logistic regression and LDA classifier on the PCA-reduced data
+lr_classifier = LogisticRegression()
+lr_classifier.fit(X_train, y_train)
+
+lda_classifier = LinearDiscriminantAnalysis()
+lda_classifier.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred_lr = lr_classifier.predict(X_test)
+y_pred_lda = lda_classifier.predict(X_test)
+
+# Save the trained model to a file
+with open('../data/logistic_regression_model.pkl', 'wb') as f:
+    pickle.dump(lr_classifier, f)
+    
+# Save the trained model to a file
+with open('../data/lda_model.pkl', 'wb') as f:
+    pickle.dump(lda_classifier, f)
+
+
+
+
