@@ -25,8 +25,8 @@ def pipeline(ok_directory, nok_directory, run_genetic_programming):
     X_train_oc, y_train_oc, X_test_oc, y_test_oc = one_class_preprocess('../data/ok_features.parquet', '../data/nok_features.parquet')
 
     #Use TPOT - genetic Programming to find the best model + export it
-    if run_genetic_programming:
-        genetic_programming(X_train, y_train)
+    # if run_genetic_programming:
+    #     genetic_programming(X_train, y_train)
 
     #Evaluate the model
     evaluate(X_train, y_train, X_test, y_test, X_train_oc, y_train_oc, X_test_oc, y_test_oc)
