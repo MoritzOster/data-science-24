@@ -4,6 +4,7 @@ from sklearn.svm import SVC, OneClassSVM
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
+import matplotlib.pyplot as plt
 
 
 # Function to evaluate a single model
@@ -61,3 +62,24 @@ def evaluate(X_train, y_train, X_test, y_test, X_train_oc, y_train_oc, X_test_oc
         print(f"AUC: {metrics['auc']:.4f}")
         print(f"Recall: {metrics['recall']:.4f}")
         print("\n" + "-"*60 + "\n")
+
+def plot_classifier_results(classifier, X_test, y_test, title):
+    classifier.predict_proba(X_test)[:, 1]    
+
+    # Plotting decision boundary and probability curve
+    plt.figure(figsize=(8, 6))
+
+    # Scatter plot of data points
+    plt.scatter(X_test[y_test == 0], y_test[y_test == 0], color='blue', marker='o', edgecolor='k', s=100, label='OK')
+    plt.scatter(X_test[y_test == 1], y_test[y_test == 1], color='red', marker='s', edgecolor='k', s=100, label='NOK')
+
+    # Plot decision boundary
+    decision_boundary = -classifier.intercept_ / classifier.coef_[0]
+    plt.axvline(decision_boundary, color='green', linestyle='--', linewidth=2, label='Decision Boundary')
+
+    plt.xlabel('AE STD')
+    plt.ylabel('Probability / Class')
+    plt.title(title)
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f'{title}_results.png')

@@ -100,24 +100,49 @@ def pca_plot(path_train, path_test):
 
     plt.show()
 
+
+def extract_highest_correlated(train_df, test_df):
+    corr_matrix = train_df.corr()
+    target_corr = corr_matrix.iloc[:-1, -1].abs()
+    high_corr_features = target_corr[target_corr > 0.9].index.tolist()
+
+    X_train = train_df[high_corr_features]
+    y_train = train_df['anomaly']
+    X_test = test_df[high_corr_features]
+    y_test = test_df['anomaly']
+
+    return X_train, y_train, X_test, y_test
+
+
 #------------------------------------------------------
 
 def preprocess(path_train, path_test):
     train_df = load(path_train)
     test_df = load(path_test)
 
-    X_test, y_test = remove_target(test_df)
-    X_train, y_train = remove_target(train_df)
-
+    X_train, y_train, X_test, y_test = extract_highest_correlated(train_df, test_df)
     X_train, X_test = remove_correlated_features(X_train, X_test)
-
-    # plot_correlation(X_train, y_train)
 
     X_train, X_test = scale_data(X_train, X_test, True)
 
-    X_train, X_test = perform_pca(X_train, X_test, True)
-
     return X_train, y_train, X_test, y_test
+
+# def preprocess(path_train, path_test):
+#     train_df = load(path_train)
+#     test_df = load(path_test)
+
+#     X_test, y_test = remove_target(test_df)
+#     X_train, y_train = remove_target(train_df)
+
+#     X_train, X_test = remove_correlated_features(X_train, X_test)
+
+#     # plot_correlation(X_train, y_train)
+
+#     X_train, X_test = scale_data(X_train, X_test, True)
+
+#     X_train, X_test = perform_pca(X_train, X_test, True)
+
+#     return X_train, y_train, X_test, y_test
 
 def one_class_preprocess(ok_path, nok_path):
     ok_data = load(ok_path)
@@ -146,6 +171,6 @@ def one_class_preprocess(ok_path, nok_path):
     
     return X_train, y_train, X_test, y_test
     
-    
+preprocess('../data/upsampled_train_features.parquet', '../data/test_features.parquet')
 
 # pca_plot('../data/train_features.parquet', '../data/test_features.parquet')
