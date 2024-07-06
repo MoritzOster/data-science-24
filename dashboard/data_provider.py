@@ -45,8 +45,13 @@ class DataProvider:
         self.index += 1
         end = self.index * self.cluster_factor
 
-        if end > self.ae_data.size:
-            end = self.ae_data.size - 1
+        min_size = min(self.ae_data.size, 
+                       self.grinding_l1_data.size, 
+                       self.grinding_l2_data.size,
+                       self.grinding_l3_data.size)
+
+        end = min(end, min_size - 1)
+
         ae_sample = self.ae_data.iloc[int(start):int(end)]
 
         current_sample = self.current_lrms_data.iloc[int(start):int(end)]

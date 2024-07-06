@@ -1,5 +1,3 @@
-import sys
-import os
 import csv
 
 import pandas as pd
@@ -7,22 +5,26 @@ from recording_provider import DataProviderProvider
 import streamlit as st
 import matplotlib.pyplot as plt
 import time
-# from prodetect import prodetect_predict
+import pickle
 from collections import deque
 from datetime import datetime
 import pandas as pd
 import time
+import numpy as np
 
 st.set_page_config(layout="wide")
 data_path= '../data/example_recordings'
 dataProviderProvider = DataProviderProvider(data_path, cluster_factor=1000, downsample_factor=100)
 
-def plot_data(data_provider, placeholder):
-    
-    fig, axs = plt.subplots(4, 1, figsize=(10, 10))
-    plt.subplots_adjust(hspace=0.5)
+def plot_data(data_provider, plot_placeholder, status):
 
-    lines = [ax.plot([], [], 'b-')[0] for ax in axs]
+    scaler = pickle.load(open("../data/scaler.pkl", "rb"))
+    model = pickle.load(open("../data/logistic_regression_model.pkl", "rb"))
+    
+    fig, axs = plt.subplots(4, 1, figsize=(8, 9))
+    plt.subplots_adjust(hspace=0.8)
+
+    lines = [ax.plot([], [], color='cornflowerblue')[0] for ax in axs]
     
     x_labels = ['Time (ms)', 'Time (ms)', 'Time (ms)', 'Time (ms)']
     y_labels = ['Sampling2000KHz AEKi', 'Grinding spindle current L1', 'Grinding spindle current L2', 'Grinding spindle current L3']
@@ -63,14 +65,22 @@ def plot_data(data_provider, placeholder):
             elif i == 3:
                 y_l3.extend(grinding_l3_data)
                 line.set_ydata(y_l3)
-        
+
         for ax in axs:
             ax.figure.canvas.draw_idle()
 
-        # TODO: update prediction
+        # Update prediction
+        ae_std = np.array([np.std(y_ae)]).reshape(1, -1)
+        feature = scaler.transform(ae_std)
+        if (model.predict(feature)):
+            status.error('Possible anomaly detected!') 
         
-        placeholder.pyplot(fig)
+        plot_placeholder.pyplot(fig)
 
+
+    ae_std = np.array([np.std(y_ae)]).reshape(1, -1)
+    feature = scaler.transform(ae_std)
+    return model.predict(feature)
 
 def init_table(placeholder):
     predictions = deque(maxlen=10)
@@ -90,24 +100,16 @@ def init_table(placeholder):
 def update_table(placeholder, preds):
     with placeholder.container():
         df = pd.DataFrame(preds, columns=['Timestamp', 'Result'])
-        df = df.set_index('Timestamp')
-        st.dataframe(df)
+        st.dataframe(df, use_container_width=True, hide_index=True)
 
-def run(ae_p, l1_p, l2_p, l3_p, image_p, status_p, last_process_p, last_10_p, preds):
+def run(plot_p, image_p, status_p, last_process_p, last_10_p, preds):
     data_provider_instance = dataProviderProvider.get_any_data_provider()
 
-    status_p.warning('Recording...')
-    # progress_p.progress(1)
-    plot_data(data_provider_instance, ae_p) #, l1_p, l2_p, l3_p)
-    # progress_p.progress(25)
+    status_p.warning('No anomaly detected so far.')
+    result = plot_data(data_provider_instance, plot_p, status_p)
+    status_p.warning('Grinding process completed.')    
     image_p.image(data_provider_instance.image_path)
 
-    status_p.warning('Processing...')
-    # progress_p.process(35)
-    # anomaly_prediction = prodetect_predict(data_provider_instance.get_ae_path())
-    status_p.success('Done!')
-    # print(anomaly_prediction)
-    result = [False]
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     csv_filename = 'predictions.csv'
 
@@ -129,7 +131,7 @@ def run(ae_p, l1_p, l2_p, l3_p, image_p, status_p, last_process_p, last_10_p, pr
 
     update_table(last_10_p, preds)
 
-    time.sleep(3)
+    time.sleep(4)
 
 
 def main():
@@ -140,29 +142,32 @@ def main():
 
     with col1:
         st.text('Current process recordings:')
-        ae_plot_placeholder = st.empty()
-        l1_plot_placeholder = st.empty()
-        l2_plot_placeholder = st.empty()
-        l3_plot_placeholder = st.empty()
+        plot_placeholder = st.empty()
         st.text('Reference for debugging:')
         image_placeholder = st.empty()
 
     with col2:
         st.text('Detection status:')
-        # progress_bar = st.progress(0)
         status_placeholder = st.empty()
         st.text('Prediction of last process:')
         last_process_placeholder = st.warning('Unknown')
+
+        col3, col4 = st.columns([2, 1])
+
+    with col3:
+        stats_placeholder = st.empty()
+        
+    with col4:
         st.text('Last 10 processes:')
         last_10_placeholder = st.empty()
-        predictions = init_table(last_10_placeholder)
+
+
+    
+    predictions = init_table(last_10_placeholder)
 
     while True: 
         run(
-            ae_plot_placeholder,
-            l1_plot_placeholder,
-            l2_plot_placeholder,
-            l3_plot_placeholder,
+            plot_placeholder,
             image_placeholder,
             status_placeholder, 
             last_process_placeholder,
