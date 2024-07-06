@@ -3,13 +3,11 @@ import os
 import csv
 
 import pandas as pd
-from data_provider import DataProvider
 from recording_provider import DataProviderProvider
 import streamlit as st
 import matplotlib.pyplot as plt
-import numpy as np
 import time
-from prodetect import prodetect_predict
+# from prodetect import prodetect_predict
 from collections import deque
 from datetime import datetime
 import pandas as pd
@@ -17,22 +15,16 @@ import time
 
 st.set_page_config(layout="wide")
 data_path= '../data/example_recordings'
-dataProviderProvider = DataProviderProvider(data_path, downsample_factor=2000000)
-
-def load_data(data_provider):
-    while True:
-        data = data_provider.next()
-        yield data
+dataProviderProvider = DataProviderProvider(data_path, cluster_factor=1000, downsample_factor=100)
 
 def plot_data(data_provider, placeholder):
     
-    fig, axs = plt.subplots(2, 2, figsize=(10, 10))
+    fig, axs = plt.subplots(4, 1, figsize=(10, 10))
+    plt.subplots_adjust(hspace=0.5)
 
-    axs = axs.flatten()
-    
     lines = [ax.plot([], [], 'b-')[0] for ax in axs]
     
-    x_labels = ['Time (s)', 'Time (s)', 'Time (s)', 'Time (s)']
+    x_labels = ['Time (ms)', 'Time (ms)', 'Time (ms)', 'Time (ms)']
     y_labels = ['Sampling2000KHz AEKi', 'Grinding spindle current L1', 'Grinding spindle current L2', 'Grinding spindle current L3']
     titles = ['AEKi w.r.t Time', 'Current L1 w.r.t Time', 'Current L2 w.r.t Time', 'Current L3 w.r.t Time']
     
@@ -41,37 +33,41 @@ def plot_data(data_provider, placeholder):
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.set_title(title)
-        ax.set_xlim(0, 25)  # Adjust as needed
-        ax.set_ylim(-0.25, 0.25)  # Adjust as needed
+        ax.set_xlim(0, 25000) 
+        ax.set_ylim(-0.4, 0.4)
 
-    data_gen = load_data(data_provider)
+    x = []
+    y_ae = []
+    y_l1 = []
+    y_l2 = []
+    y_l3 = []
 
-    x_data = []
-    y_data = [[], [], [], []]    
-    
-    # start_time = time.time()
     while True:
-        data = next(data_gen, None)
-        if data is None:
+        ae_data, current_data, grinding_l1_data, grinding_l2_data, grinding_l3_data, x_data = data_provider.next()
+        if len(ae_data) == 0:
             break
 
-        # elapsed_time = time.time() - start_time
-        # if elapsed_time > 25:
-        #     break
-        # progress_bar.progress(10)
+        x.extend(x_data)
 
-        y_data[0].append(data[0])
-        y_data[1].append(data[2])
-        y_data[2].append(data[3])
-        y_data[3].append(data[4])
-        x_data.append(data[5])
-        
         for i, line in enumerate(lines):
-            line.set_xdata(x_data)
-            line.set_ydata(y_data[i])
+            line.set_xdata(x)
+            if i == 0:
+                y_ae.extend(ae_data)
+                line.set_ydata(y_ae)
+            elif i == 1:
+                y_l1.extend(grinding_l1_data)
+                line.set_ydata(y_l1)
+            elif i == 2:
+                y_l2.extend(grinding_l2_data)
+                line.set_ydata(y_l2)
+            elif i == 3:
+                y_l3.extend(grinding_l3_data)
+                line.set_ydata(y_l3)
         
         for ax in axs:
             ax.figure.canvas.draw_idle()
+
+        # TODO: update prediction
         
         placeholder.pyplot(fig)
 
@@ -97,21 +93,21 @@ def update_table(placeholder, preds):
         df = df.set_index('Timestamp')
         st.dataframe(df)
 
-def run(plot_p, image_p, status_p, last_process_p, last_10_p, preds):
+def run(ae_p, l1_p, l2_p, l3_p, image_p, status_p, last_process_p, last_10_p, preds):
     data_provider_instance = dataProviderProvider.get_any_data_provider()
 
     status_p.warning('Recording...')
     # progress_p.progress(1)
-    plot_data(data_provider_instance, plot_p)
+    plot_data(data_provider_instance, ae_p) #, l1_p, l2_p, l3_p)
     # progress_p.progress(25)
     image_p.image(data_provider_instance.image_path)
 
     status_p.warning('Processing...')
     # progress_p.process(35)
-    anomaly_prediction = prodetect_predict(data_provider_instance.get_ae_path())
+    # anomaly_prediction = prodetect_predict(data_provider_instance.get_ae_path())
     status_p.success('Done!')
     # print(anomaly_prediction)
-    result = anomaly_prediction
+    result = [False]
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     csv_filename = 'predictions.csv'
 
@@ -144,7 +140,10 @@ def main():
 
     with col1:
         st.text('Current process recordings:')
-        plot_placeholder = st.empty()
+        ae_plot_placeholder = st.empty()
+        l1_plot_placeholder = st.empty()
+        l2_plot_placeholder = st.empty()
+        l3_plot_placeholder = st.empty()
         st.text('Reference for debugging:')
         image_placeholder = st.empty()
 
@@ -160,7 +159,10 @@ def main():
 
     while True: 
         run(
-            plot_placeholder, 
+            ae_plot_placeholder,
+            l1_plot_placeholder,
+            l2_plot_placeholder,
+            l3_plot_placeholder,
             image_placeholder,
             status_placeholder, 
             last_process_placeholder,
