@@ -21,8 +21,8 @@ def plot_data(data_provider, plot_placeholder, status):
     scaler = pickle.load(open("../data/scaler.pkl", "rb"))
     model = pickle.load(open("../data/logistic_regression_model.pkl", "rb"))
     
-    fig, axs = plt.subplots(4, 1, figsize=(8, 9))
-    plt.subplots_adjust(hspace=0.8)
+    fig, axs = plt.subplots(4, 1, figsize=(9, 10))
+    plt.subplots_adjust(hspace=0.9)
 
     lines = [ax.plot([], [], color='cornflowerblue')[0] for ax in axs]
     
@@ -82,10 +82,15 @@ def plot_data(data_provider, plot_placeholder, status):
     feature = scaler.transform(ae_std)
     return model.predict(feature)
 
-def init_table(placeholder):
+def init_table(df_placeholder, last_pred_p):
     predictions = deque(maxlen=10)
     last_10 = pd.read_csv('predictions.csv').tail(10)
     last_10 = last_10.drop(columns=['Path'])
+    if last_10['AnomalyPrediction'].iloc[9]:
+        last_pred_p.error('**Failure!**', icon="🚨")
+    else:
+        last_pred_p.success('**Success!**', icon="✅")
+
     last_10['AnomalyPrediction'] = last_10['AnomalyPrediction'].apply(lambda x: '🚨' if x else '✅')
     last_10 = last_10.rename(columns={'AnomalyPrediction': 'Result'})
     last_10 = last_10.iloc[::-1]
@@ -93,7 +98,7 @@ def init_table(placeholder):
     for row in last_10.itertuples(index=False):
         predictions.append(row)
 
-    update_table(placeholder, predictions)
+    update_table(df_placeholder, predictions)
 
     return predictions
 
@@ -102,13 +107,45 @@ def update_table(placeholder, preds):
         df = pd.DataFrame(preds, columns=['Timestamp', 'Result'])
         st.dataframe(df, use_container_width=True, hide_index=True)
 
-def run(plot_p, image_p, status_p, last_process_p, last_10_p, preds):
+def update_statistics(placeholder):
+    p_left, p_right = placeholder
+
+    colors = ['#66b3ff', '#ff9999']
+
+    history = pd.read_csv('predictions.csv')
+    history['Timestamp'] = pd.to_datetime(history['Timestamp'])
+    last_24_hours = history[history['Timestamp'] >= (pd.Timestamp.now() - pd.Timedelta(hours=24))]
+    num_anom_24 = last_24_hours['AnomalyPrediction'].sum()
+    num_proc_24 = len(last_24_hours)
+    num_anomalies = history['AnomalyPrediction'].sum()
+    num_processes = len(history)
+
+    fig_24, ax_24 = plt.subplots()
+    ax_24.pie([num_proc_24 - num_anom_24, num_anom_24], radius=0.8, colors=colors)
+    fig_total, ax_total = plt.subplots()
+    ax_total.pie([num_processes - num_anomalies, num_anomalies], radius=0.8, colors=colors)
+
+    with p_left.container():
+        st.text('Anomalies in the \nlast 24h:')
+        st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_anom_24}</h1>", unsafe_allow_html=True)
+        st.text('Processes in the \nlast 24h:')
+        st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_proc_24}</h1>", unsafe_allow_html=True)
+        st.pyplot(fig_24)
+
+    with p_right.container():
+        st.text('Total number of \nanomalies:')
+        st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_anomalies}</h1>", unsafe_allow_html=True)
+        st.text('Total number of \nprocesses:')
+        st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_processes}</h1>", unsafe_allow_html=True)
+        st.pyplot(fig_total)
+
+def run(plot_p, status_p, last_process_p, last_10_p, preds, stats_p):
     data_provider_instance = dataProviderProvider.get_any_data_provider()
 
     status_p.warning('No anomaly detected so far.')
     result = plot_data(data_provider_instance, plot_p, status_p)
     status_p.warning('Grinding process completed.')    
-    image_p.image(data_provider_instance.image_path)
+    # image_p.image(data_provider_instance.image_path)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     csv_filename = 'predictions.csv'
@@ -130,49 +167,58 @@ def run(plot_p, image_p, status_p, last_process_p, last_10_p, preds):
 
 
     update_table(last_10_p, preds)
+    update_statistics(stats_p)
 
     time.sleep(4)
 
 
 def main():
-    st.title('Grinding Process Anomaly Detection')
 
     # Create two columns
-    col1, col2 = st.columns([4, 5])
+    _, col1, _, col2, _ = st.columns([1, 8, 1, 8, 1])
 
     with col1:
+        st.title('Grinding Process Anomaly Detection')
         st.text('Current process recordings:')
         plot_placeholder = st.empty()
-        st.text('Reference for debugging:')
-        image_placeholder = st.empty()
+        # st.text('Reference for debugging:')
+        # image_placeholder = st.empty()
 
     with col2:
+        st.title('')
         st.text('Detection status:')
         status_placeholder = st.empty()
         st.text('Prediction of last process:')
         last_process_placeholder = st.warning('Unknown')
 
-        col3, col4 = st.columns([2, 1])
+        st.title('')
+
+        col3, col4, col5 = st.columns([1, 1, 1])
 
     with col3:
-        stats_placeholder = st.empty()
-        
+        stats_placeholder_left = st.empty()
+    
     with col4:
+        stats_placeholder_right = st.empty()
+        
+    with col5:
         st.text('Last 10 processes:')
         last_10_placeholder = st.empty()
-
-
     
-    predictions = init_table(last_10_placeholder)
+    stats_placeholder = stats_placeholder_left, stats_placeholder_right
+    
+    predictions = init_table(last_10_placeholder, last_process_placeholder)
+    update_statistics(stats_placeholder)
 
     while True: 
         run(
             plot_placeholder,
-            image_placeholder,
+            # image_placeholder,
             status_placeholder, 
             last_process_placeholder,
             last_10_placeholder, 
-            predictions
+            predictions,
+            stats_placeholder
         )
 
 if __name__ == "__main__":
