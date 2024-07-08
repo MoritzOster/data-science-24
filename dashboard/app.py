@@ -121,26 +121,30 @@ def update_statistics(placeholder):
     num_processes = len(history)
 
     fig_24, ax_24 = plt.subplots()
-    ax_24.pie([num_proc_24 - num_anom_24, num_anom_24], radius=0.8, colors=colors)
+    if (num_anom_24 > 0 and num_proc_24 > 0):
+        ax_24.pie([num_proc_24 - num_anom_24, num_anom_24], radius=0.8, colors=colors)
     fig_total, ax_total = plt.subplots()
-    ax_total.pie([num_processes - num_anomalies, num_anomalies], radius=0.8, colors=colors)
+    if (num_anomalies > 0 and num_processes > 0):
+        ax_total.pie([num_processes - num_anomalies, num_anomalies], radius=0.8, colors=colors)
 
     with p_left.container():
         st.text('Anomalies in the \nlast 24h:')
         st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_anom_24}</h1>", unsafe_allow_html=True)
         st.text('Processes in the \nlast 24h:')
         st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_proc_24}</h1>", unsafe_allow_html=True)
-        st.pyplot(fig_24)
+        if (num_anom_24 > 0 and num_proc_24 > 0):
+            st.pyplot(fig_24)
 
     with p_right.container():
         st.text('Total number of \nanomalies:')
         st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_anomalies}</h1>", unsafe_allow_html=True)
         st.text('Total number of \nprocesses:')
         st.markdown(f"<h1 style='text-align: center; font-size: 50px;'>{num_processes}</h1>", unsafe_allow_html=True)
-        st.pyplot(fig_total)
+        if (num_anomalies > 0 and num_processes > 0):
+            st.pyplot(fig_total)
 
 def run(plot_p, status_p, last_process_p, last_10_p, preds, stats_p):
-    data_provider_instance = dataProviderProvider.get_any_data_provider()
+    data_provider_instance = dataProviderProvider.get_nok_data_provider()
 
     status_p.warning('No anomaly detected so far.')
     result = plot_data(data_provider_instance, plot_p, status_p)
