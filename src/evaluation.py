@@ -71,7 +71,7 @@ def plot_classifier_results(classifier, X_test, y_test, title):
 
     # Scatter plot of data points
     plt.scatter(X_test[y_test == 0], y_test[y_test == 0], color='blue', marker='o', edgecolor='k', s=100, label='OK')
-    plt.scatter(X_test[y_test == 1], y_test[y_test == 1], color='red', marker='s', edgecolor='k', s=100, label='NOK')
+    plt.scatter(X_test[y_test == 1], y_test[y_test == 1], color='red', marker='*', edgecolor='k', s=100, label='NOK')
 
     # Plot decision boundary
     decision_boundary = -classifier.intercept_ / classifier.coef_[0]
