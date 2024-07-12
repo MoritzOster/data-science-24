@@ -1,10 +1,9 @@
 # Process Monitoring of Grinding Processes
 
-![image](https://github.com/MoritzOster/data-science-24/assets/44369843/0c3e96c2-c27e-4f16-b8bf-160cb776fbff)
-
 ## Overview
 
 This repository contains the code for the project "Process Monitoring of Grinding Processes," conducted by Group 1 of Data Science course 2024 at Saarland University. The project aims to monitor and analyze grinding processes to identify trends and detect anomalies, using data from sensors installed on a Kellenberger T25 grinding machine.
+It also offers a dashboard which can be used for live monitoring of these grinding processes and to identify anomalies while they are happening.
 
 ## Project Structure
 
@@ -12,6 +11,7 @@ The repository is organized as follows:
 
 - **data/**
   - Contains parquet files representing the data and pickle files for the model and PCA
+  - Contains a small excerpt of the grinding data to simulate example grinding processes for the dashboard
 - **src/**
   - Contains the source code for data processing and model development
 - **dashboard/**
@@ -54,5 +54,5 @@ In the src folder:
 - pipeline.py: Combines all steps into one script.
 - prodetect.py: Implements the ProDetect model and provides functionality to evaluate new data points.
 
-Run: streamlit run dashboard.py in the dashboard folder, to start the dashboard.
-Starting the dashboard in the current development stage, runs a simulation of a live grinding process, from a measurement, saved in dashboard/2024.02.14_22.00.40_Grinding
+Run: streamlit run app.py in the dashboard folder, to start the dashboard.
+Starting the dashboard in the current development stage, runs a simulation of a live grinding process, from a measurement, saved in data/example_recordings
